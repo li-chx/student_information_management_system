@@ -28,7 +28,7 @@ string encipher::ascii_to_sha1(string scr)
 		}
 		n++;
 	}
-	if (0 < n || n > 63)
+	if (0 > n || n > 63)
 	{
 		return "-1";
 	}

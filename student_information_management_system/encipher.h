@@ -6,7 +6,6 @@ class encipher
 public:
 	encipher();
 	string ascii_to_sha1(string scr);
-
 private:
 	__int64 Plus(__int64 x, __int64 y);
 	__int64 ft(__int64 x, __int64 y, __int64 z, __int64 i);
@@ -18,4 +17,4 @@ private:
 	__int64 H3 = 0x10325476;
 	__int64 H4 = 0xc3d2e1f0;
 };
-
+extern encipher enci;
