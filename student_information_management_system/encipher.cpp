@@ -98,13 +98,8 @@ string encipher::ascii_to_sha1(string scr)
 	H2 = Plus(H2, c);
 	H3 = Plus(H3, d);
 	H4 = Plus(H4, e);
-	
-	printf("%I64d", H0);
-	printf("%I64d", H1);
-	printf("%I64d", H2);
-	printf("%I64d", H3);
-	printf("%I64d\n", H4);
-	return ;
+	ans = to_string(H0) + to_string(H1) + to_string(H2) + to_string(H3) + to_string(H4);
+	return ans;
 }
 
 __int64 encipher::Plus(__int64 x, __int64 y)
