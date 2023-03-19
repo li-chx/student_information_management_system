@@ -27,18 +27,30 @@
     <ClCompile Include="tool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="service.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stu_info.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="global.h">
+    <ClInclude Include="global.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="encipher.h">
+    <ClInclude Include="encipher.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="menu.h">
+    <ClInclude Include="menu.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="tool.h">
+    <ClInclude Include="tool.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="service.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stu_info.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

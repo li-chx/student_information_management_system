@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include <string>
 #include <cstdio>
 #include <cstring>
@@ -9,9 +8,12 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include <list>
 #include <fstream>
 #include <Windows.h>
-#include "encipher.h"
-#include "tool.h"
-#include "menu.h"
+#include "stu_info.hpp"
+#include "encipher.hpp"
+#include "tool.hpp"
+#include "service.hpp"
+#include "menu.hpp"
 using namespace std;

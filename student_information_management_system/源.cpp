@@ -1,5 +1,7 @@
-#include "global.h"
+#include "global.hpp"
+//cout << "1.添加学生信息\n2.查询学生信息\n3.删除学生信息\n4.修改学生信息\n5.显示学生信息\n0.退出系统" << endl;
 encipher enci;
+manager manager_sys;
 int main()
 {
 	color(2);
@@ -13,5 +15,28 @@ int main()
 			return -1;
 		}
 	} while (err != 0);
-	menu();
+	for(;;)
+	{
+		err = menu();
+		switch (err)
+		{
+		case 0:
+			return 0;
+		case 1:
+			manager_sys.add();
+			break;
+		case 2:
+			manager_sys.search();
+			break;
+		case 3:
+			//del;
+			break;
+		case 4:
+			//change();
+			break;
+		case 5:
+			//show();
+			break;
+		}
+	}
 }

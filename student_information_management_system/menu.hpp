@@ -1,4 +1,4 @@
-#include "global.h"
+#include "global.hpp"
 #pragma once
 int login();
 int menu();

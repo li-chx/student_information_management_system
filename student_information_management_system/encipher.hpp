@@ -1,5 +1,5 @@
 #pragma once
-#include "global.h"
+#include "global.hpp"
 using namespace std;
 class encipher
 {
