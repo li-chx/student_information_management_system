@@ -23,6 +23,7 @@ int main()
 		{
 		case 0:
 			manager_sys.saveinfo();
+			color();
 			return 0;
 		case 1:
 			manager_sys.add();

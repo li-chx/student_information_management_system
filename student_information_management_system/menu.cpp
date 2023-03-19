@@ -120,7 +120,9 @@ int menu()
 		cout << "1.添加学生信息\n2.查询学生信息\n3.删除学生信息\n4.修改学生信息\n5.显示学生信息\n0.退出系统" << endl;
 		for (;;)
 		{
+			color();
 			cin >> temp;
+			color(14);
 			if (temp.length() == 1)
 			{
 				if (temp[0] <= '6' && temp[0] >= '0')

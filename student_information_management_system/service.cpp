@@ -44,7 +44,7 @@ void manager::saveinfo()
 {
 	ofstream out;
 	out.open("data.txt", ios::out);
-	for (auto x : database)
+	for (student x : database)
 		out << x.show_all_ele() << endl;
 }
 
