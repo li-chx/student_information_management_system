@@ -35,7 +35,7 @@ int main()
 			//change();
 			break;
 		case 5:
-			//show();
+			manager_sys.show();
 			break;
 		}
 	}

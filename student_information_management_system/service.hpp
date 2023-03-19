@@ -13,6 +13,10 @@ public:
 	void show();
 	~manager();
 private:
+	void search_all(string test);
+	void setcolor_output();
+	vector<list<student>::iterator>sel_database;
+	vector<int>sel_database_color;
 	list<student>database;
 	list<student>::iterator first;
 };

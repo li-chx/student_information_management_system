@@ -8,9 +8,13 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include <map>
+#include <variant>
 #include <list>
 #include <fstream>
 #include <Windows.h>
+#include <conio.h>
+#include <queue>
 #include "stu_info.hpp"
 #include "encipher.hpp"
 #include "tool.hpp"

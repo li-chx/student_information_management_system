@@ -20,6 +20,13 @@ string student::show_all_ele()
 
 bool student::check(string chnum, string chname)
 {
+	if (chnum != "" && chname != "")
+	{
+		if (num == chnum && name == chname)
+			return true;
+		else
+			return false;
+	}
 	if (num == chnum)
 		return true;
 	if (name == chname)

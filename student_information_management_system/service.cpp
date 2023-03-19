@@ -1,16 +1,16 @@
 #include "service.hpp"
 
+
 manager::manager()
 {
 
 }
 
-
 void manager::add()
 {
 	string temp;
 	color(3);
-	cout << "欢迎使用学生信息录入向导"<<endl;
+	cout << "欢迎使用学生信息录入向导" << endl;
 	color(14);
 	cout << "请问你希望以何种方式录入学生信息？" << endl;
 	cout << "(1)录入单个学生信息(默认)\n(2)以文件方式录入多个学生的信息\n输入1或2";
@@ -18,7 +18,7 @@ void manager::add()
 	cin >> temp;
 	if (temp == "2")
 	{
-		
+
 	}
 	string num;
 	string name;
@@ -38,7 +38,7 @@ void manager::add()
 	cin >> name;
 	color(14);
 	cout << "（进度2/8）学生性别:(男/女)";
-	for(;;)
+	for (;;)
 	{
 		color();
 		cin >> temp;
@@ -51,7 +51,7 @@ void manager::add()
 		gender = true;
 	color(14);
 	cout << "（进度3/8）学生年龄:(阿拉伯数字)";
-	for(;;)
+	for (;;)
 	{
 		color();
 		cin >> temp;
@@ -143,7 +143,7 @@ void manager::add()
 	database.push_back(stu);
 	color(14);
 	cout << "录入完成" << endl;
-	cout << "学生信息:"<<endl;
+	cout << "学生信息:" << endl;
 	color(11);
 	cout << list_head();
 	color(14);
@@ -161,52 +161,16 @@ void manager::search()
 	cout << "请输入想要查询的学生的学号或名字";
 	color();
 	cin >> test;
-	for (auto x : database)
-	{
-		if (x.check(test, ""))
-		{
-			string temp;
-			ans = x.show_all_ele();
-			color(11);
-			if(!showhead)
-				cout << list_head();
-			showhead = true;
-			temp.insert(0, ans.c_str(), ans.find('\t'));
-			color(13);
-			cout << temp;
-			color(14);
-			temp.clear();
-			temp.insert(0, ans, ans.find('\t'), ans.length());
-			cout << temp << endl;
-		}
-		if (x.check("", test))
-		{
-			string temp;
-			ans = x.show_all_ele();
-			color(11);
-			if (!showhead)
-				cout << list_head();
-			showhead = true;
-			color(14);
-			temp.insert(0, ans.c_str(), ans.find('\t'));
-			cout << temp;
-			color(13);
-			int i = 0;
-			for (i = ans.find('\t'); ans[i] == '\t'; i++);
-			temp.clear();
-			temp.insert(0, ans, ans.find('\t'), ans.find('\t', i) - 1);
-			cout << temp;
-			color(14);
-			temp.clear();
-			temp.insert(0, ans, ans.find('\t', i), ans.length());
-			cout << temp << endl;
-		}
-	}
-	if (!showhead)
+	search_all(test);
+	if (sel_database.empty())
 	{
 		color(12);
-		cout << "为查询到相关学生信息！" << endl;
+		cout << "未查询到相关学生信息！" << endl;
+		return;
 	}
+	color(11);
+	cout << list_head();
+	setcolor_output();
 }
 
 void manager::del()
@@ -219,8 +183,101 @@ void manager::change()
 
 void manager::show()
 {
+	color(14);
+	cout << "打印所有学生的学生信息";
+	color(11);
+	cout << list_head();
+	color(14);
+	for (student x : database)
+		cout << x.show_all_ele() << endl;
+	cout << "全部信息打印完毕" << endl;
+	fflush(stdin);
+	cout << "输入任意键退出" << endl;
+	char x = _getch();
 }
 
 manager::~manager()
 {
+}
+
+
+void manager::search_all(string test)
+{
+	sel_database.clear();
+	sel_database_color.clear();
+	for (list<student>::iterator it = database.begin(); it != database.end(); it++)
+	{
+		if (it->check(test, test))
+		{
+			sel_database.push_back(it);
+			sel_database_color.push_back(3);
+			continue;
+		}
+		if (it->check(test, ""))
+		{
+			sel_database.push_back(it);
+			sel_database_color.push_back(1);
+		}
+		if (it->check("", test))
+		{
+			sel_database.push_back(it);
+			sel_database_color.push_back(2);
+		}
+	}
+}
+void manager::setcolor_output()
+{
+	for(size_t i=0;i<sel_database.size();i++)
+	{
+		list<student>::iterator it = sel_database[i];
+		string left = it->show_all_ele();
+		int mode = sel_database_color[i];
+		switch (mode)
+		{
+		case 1:
+		{
+			string temp;
+			temp.insert(0, left.c_str(), left.find('\t'));
+			color(13);
+			cout << temp;
+			color(14);
+			temp.clear();
+			temp.insert(0, left, left.find('\t'), left.length());
+			cout << temp << endl;
+			break;
+		}
+		case 2:
+		{
+			string temp;
+			color(14);
+			temp.insert(0, left.c_str(), left.find('\t'));
+			cout << temp;
+			color(13);
+			size_t i = 0;
+			for (i = left.find('\t'); left[i] == '\t'; i++);
+			temp.clear();
+			temp.insert(0, left, left.find('\t'), left.find('\t', i) - 1);
+			cout << temp;
+			color(14);
+			temp.clear();
+			temp.insert(0, left, left.find('\t', i), left.length());
+			cout << temp << endl;
+			break;
+		}
+		case 3:
+		{
+			string temp;
+			color(13);
+			size_t i = 0;
+			for (i = left.find('\t'); left[i] == '\t'; i++);
+			temp.insert(0, left, 0, left.find('\t') + left.find('\t', i) - 1);
+			cout << temp;
+			color(14);
+			temp.clear();
+			temp.insert(0, left, left.find('\t', i), left.length());
+			cout << temp << endl;
+			break;
+		}
+		}
+	}
 }
