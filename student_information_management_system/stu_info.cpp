@@ -11,6 +11,25 @@ student::student(string inum, string iname, bool igender, unsigned int iage, arr
 	Phone_number = iPhone_number;
 }
 
+void student::change_ele(vector<string>eles)
+{
+	auto get_gender = [](string gender) {
+		if (gender[0] == 'ÄĞ')
+			return 0;
+		if (gender[0] == 'Å®')
+			return 1;
+		return -1;
+	};
+	num = eles[0];
+	name = eles[1];
+	gender = get_gender(eles[2]);
+	age = atoi(eles[3].c_str());
+	grade_class[0] = atoi(eles[4].c_str());
+	grade_class[1] = atoi(eles[5].c_str());
+	address = eles[6];
+	Phone_number = eles[7];
+}
+
 string student::show_all_ele()
 {
 	string ans;

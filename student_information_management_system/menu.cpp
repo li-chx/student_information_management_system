@@ -19,7 +19,7 @@ int login()
 			char ch;
 			in >> ch;
 			if (in.eof())
-				throw - 2;
+				throw -2;
 		}
 	}
 	catch (int error_code)

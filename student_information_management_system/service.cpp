@@ -199,41 +199,48 @@ void manager::del()
 		setcolor_output(1);
 		color(6);
 		cout << "查询到多条符合条件的结果，如何操作？" << endl << "(A)删除全部,(N)撤销操作,或输入数字删除对应学生信息,想要删除多条信息可用空格分隔" << endl;
+		clc();
 		for (;;)
 		{
 			color();
-			clc();
 			getline(cin, delstatus);
 			if (delstatus.length() == 1)
 			{
-				if (delstatus[0] == 'A')
+				if (delstatus[0] == 'A'||delstatus[0] == 'a')
 				{
 					for (int i = 0; i < sel_database.size(); i++)
 						del_ele.push_back(i);
 					break;
 				}
-				if (delstatus[0] == 'N')
+				if (delstatus[0] == 'N'|| delstatus[0] == 'n')
 				{
 					color(14);
 					cout << "操作已撤销" << endl;
 					return;
 				}
 			}
-
-			for (char x : delstatus)
+			try
 			{
-				if ('1' <= x && x <= sel_database.size() + '0')
+				for (char x : delstatus)
 				{
-					del_ele.push_back(x - '0' - 1);
+					if ('1' <= x && x <= sel_database.size() + '0')
+					{
+						del_ele.push_back(x - '0' - 1);
+					}
+					else
+					{
+						if (x == ' ')
+							continue;
+						color(14);
+						cout << "输入不合法"<<endl;
+						throw - 1;
+					}
 				}
-				else
-				{
-					if (x == ' ')
-						continue;
-					color(14);
-					cout << "输入不合法";
+			}
+			catch (int errorcode)
+			{
+				if (errorcode == -1)
 					continue;
-				}
 			}
 			break;
 		}
@@ -302,7 +309,7 @@ void manager::change()
 	color(3);
 	cout << "欢迎使用学生信息修改向导" << endl;
 	color(14);
-	cout << "请输入想要删除的学生的学号或名字";
+	cout << "请输入想要修改的学生的学号或名字";
 	color();
 	cin >> test;
 	search_all(test);
@@ -326,7 +333,7 @@ void manager::change()
 			cin >> choice;
 			auto test_all_num = [](string test) {
 				for (char x : test)
-					if (!(0 <= x && x <= 9))
+					if (!('0' <= x && x <= '9'))
 						return false;
 				return true;
 			};
@@ -340,7 +347,6 @@ void manager::change()
 				cout << "输入不合法";
 				continue;
 			}
-
 			break;
 		}
 	}
@@ -350,18 +356,243 @@ void manager::change()
 	sel_database_color_tem.push_back(sel_database_color[fin_choice]);
 	sel_database.clear(), sel_database_color.clear();
 	sel_database = sel_database_tem, sel_database_color = sel_database_color_tem;
+	vector<int>change_ele;
 	color(11);
-	cout << list_head(1);
-	setcolor_output(1);
+	cout << list_head();
+	setcolor_output();
 	color(6);
 	cout << "将更改该学生信息，输入y确认" << endl;
 	char x;
 	clc();
+	color();
 	x = getchar();
 	if (x == 'y' || x == 'Y')
 	{
-		for (list<student>::iterator it : sel_database)
-			database.erase(it);
+		stringstream sstream(sel_database[0]->show_all_ele());
+		string temp;
+		vector<string>eles_head = { "学号","姓名","性别","年龄","年级","班级","家庭住址","电话" };
+		vector<string>eles_data;
+		for (int i = 0; i < 8; i++)
+		{
+			sstream >> temp;
+			if (i == 4)
+			{
+				string tempa;
+				tempa.insert(0, temp, 0, temp.find('/'));
+				eles_data.push_back(tempa);
+				tempa.clear();
+				tempa.insert(0, temp, temp.find('/') + 1, temp.length());
+				temp = tempa;
+			}
+			eles_data.push_back(temp);
+		}
+		vector<string>eles_afterchange = eles_data;
+		for (int i = 0; i < 8; i++)
+		{
+			color(14);
+			cout << '(' << i + 1 << ')';
+			color(11);
+			if (i != 6)
+				cout << eles_head[i] << "\t\t";
+			else
+				cout << eles_head[i] << "\t";
+			color(14);
+			cout << eles_data[i] << endl;
+		}
+		cout << "你希望修改哪几项?(空格做分隔符)";
+		clc();
+		for(;;)
+		{
+			color();
+			getline(cin, temp);
+			try 
+			{
+				for (char x : temp)
+				{
+					if ('1' <= x && x <= '8')
+					{
+						change_ele.push_back(x - '0' - 1);
+					}
+					else
+					{
+						if (x == ' ')
+							continue;
+						color(14);
+						cout << "输入不合法";
+						throw - 1;
+					}
+				}
+			}
+			catch (int errorcode)
+			{
+				if (errorcode == -1)
+					continue;
+			}
+			break;
+		}
+		color(14);
+		cout << "请输入新信息" << endl;
+		for (int x : change_ele)
+		{
+			switch (x)
+			{
+			case 0:
+				color(14);
+				cout << "学生学号:";
+				color();
+				cin >> eles_afterchange[0];
+				break;
+			case 1:
+				color(14);
+				cout << "学生姓名:";
+				color();
+				cin >> eles_afterchange[1];
+				break;
+			case 2:
+				color(14);
+				cout << "学生性别:(男/女)";
+				for (;;)
+				{
+					color();
+					cin >> temp;
+					if (temp == "男" || temp == "女")
+						break;
+					color(12);
+					cout << "输入非法,请重新输入";
+				}
+				if (temp == "女")
+					eles_afterchange[2] = "女";
+				color(14);
+				break;
+			case 3:
+				cout << "学生年龄:(阿拉伯数字)";
+				for (;;)
+				{
+					color();
+					cin >> temp;
+					auto test = [](string age)->bool {
+						if (age.length() == 0 || age.length() >= 4)
+							return false;
+						for (char x : age)
+						{
+							if ('0' <= x && x <= '9')
+								continue;
+							return false;
+						}
+						return true;
+					};
+					if (test(temp))
+						break;
+					else
+					{
+						color(12);
+						cout << "输入非法,请重新输入";
+					}
+				}
+				eles_afterchange[3] = temp;
+				break;
+			case 4:
+				color(14);
+				cout << "学生年级:(阿拉伯数字)";
+				for (;;)
+				{
+					color();
+					cin >> temp;
+					auto test = [](string age)->bool {
+						if (age.length() == 0 || age.length() >= 3)
+							return false;
+						for (char x : age)
+						{
+							if ('0' <= x && x <= '9')
+								continue;
+							return false;
+						}
+						return true;
+					};
+					if (test(temp))
+						break;
+					else
+					{
+						color(12);
+						cout << "输入非法,请重新输入";
+					}
+				}
+				eles_afterchange[4] = temp;
+				break;
+			case 5:
+				color(14);
+				cout << "学生班级:(阿拉伯数字)";
+				for (;;)
+				{
+					color();
+					cin >> temp;
+					auto test = [](string age)->bool {
+						if (age.length() == 0 || age.length() >= 3)
+							return false;
+						for (char x : age)
+						{
+							if ('0' <= x && x <= '9')
+								continue;
+							return false;
+						}
+						return true;
+					};
+					if (test(temp))
+						break;
+					else
+					{
+						color(12);
+						cout << "输入非法,请重新输入";
+					}
+				}
+				eles_afterchange[5] = temp;
+				break;
+			case 6:
+				color(14);
+				cout << "学生家庭地址:";
+				color();
+				cin >> eles_afterchange[6];
+				break;
+			case 7:
+				color(14);
+				cout << "学生手机电话:";
+				color();
+				cin >> eles_afterchange[7];
+				color(14);
+			}
+		}
+		color(14);
+		cout << "信息录入完毕，修改的信息有"<<endl;
+		for (int x : change_ele)
+		{
+			color(11);
+			if (x != 6)
+				cout << eles_head[x] << ":\t\t";
+			else
+				cout << eles_head[x] << ":\t";
+			color(14);
+			cout << left << setw(20)<<eles_data[x] <<left<< setw(5) << "改为" << right << setw(5) << eles_afterchange[x] << endl;
+		}
+		cout << "将更改该学生信息，输入y确认，这是最后一次确认" << endl;
+		clc();
+		char x;
+		x = getchar();
+		if (x == 'y' || x == 'Y')
+		{
+			sel_database[0]->change_ele(eles_afterchange);
+			color(14);
+			cout << "已更改" << endl;
+			color(11);
+			cout << list_head();
+			color(14);
+			cout << sel_database[0]->show_all_ele() << endl;
+		}
+		else
+		{
+			color(14);
+			cout << "操作已撤销" << endl;
+			return;
+		}
 	}
 	else
 	{
@@ -370,12 +601,11 @@ void manager::change()
 		return;
 	}
 }
-}
 
 void manager::show()
 {
 	color(14);
-	cout << "打印所有学生的学生信息";
+	cout << "打印所有学生的学生信息"<<endl;
 	color(11);
 	cout << list_head();
 	color(14);
