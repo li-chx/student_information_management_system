@@ -14,7 +14,7 @@ public:
 	~manager();
 private:
 	void search_all(string test);
-	void setcolor_output();
+	void setcolor_output(bool nu = false);
 	vector<list<student>::iterator>sel_database;
 	vector<int>sel_database_color;
 	list<student>database;

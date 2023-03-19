@@ -7,9 +7,12 @@ void color(short x)	//自定义函根据参数改变颜色
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
-string list_head()
+string list_head(bool nu)
 {
+	
 	string ans = "学号\t\t姓名\t\t性别\t年龄\t年级/班级\t家庭地址\t\t手机电话\t\n";
+	if (nu)
+		ans.insert(0, string("   "));
 	return ans;
 
 }
@@ -36,4 +39,13 @@ string info_list(string num, string name, bool gender, unsigned int age, array<i
 		else
 			ans.append(address + "\t" + Phone_number);
 	return ans;
+}
+
+void clc()
+{
+	int ch = 0;
+	while ((ch = getchar()) != EOF && ch != '\n')
+	{
+		;
+	}
 }

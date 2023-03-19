@@ -29,10 +29,10 @@ int main()
 			manager_sys.search();
 			break;
 		case 3:
-			//del;
+			manager_sys.del();
 			break;
 		case 4:
-			//change();
+			manager_sys.change();
 			break;
 		case 5:
 			manager_sys.show();

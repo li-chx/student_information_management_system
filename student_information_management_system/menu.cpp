@@ -2,6 +2,9 @@
 
 int login()
 {
+#ifdef _DEBUG
+	return 0;
+#endif
 	encipher* checker = &enci;
 	ifstream in;
 	in.open("code.txt", ios::in);
