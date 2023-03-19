@@ -2,9 +2,6 @@
 
 int login()
 {
-#ifdef _DEBUG
-	return 0;
-#endif
 	encipher* checker = &enci;
 	ifstream in;
 	in.open("code.txt", ios::in);
@@ -91,6 +88,7 @@ int login()
 			{
 				in.close();
 				color(2);
+				clear();
 				cout << "登陆成功，欢迎回来" << username << endl;
 				color();
 				return 0;

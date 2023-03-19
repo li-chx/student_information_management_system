@@ -1,9 +1,51 @@
 #include "service.hpp"
 
-
-manager::manager()
+int manager::loadinfo(string path)
 {
+	ifstream in;
+	string temp;
+	stringstream sstream;
+	vector<string>eles_data;
+	in.open(path, ios::in);
+	if (!in.is_open())
+	{
+		return -1;
+	}
+	for (;;)
+	{
+		getline(in, temp);
+		if (temp.length() == 0)
+			break;
+		sstream << temp;
+		for (int i = 0; i < 8; i++)
+		{
+			sstream >> temp;
+			if (i == 4)
+			{
+				string tempa;
+				tempa.insert(0, temp, 0, temp.find('/'));
+				eles_data.push_back(tempa);
+				tempa.clear();
+				tempa.insert(0, temp, temp.find('/') + 1, temp.length());
+				temp = tempa;
+				i++;
+			}
+			eles_data.push_back(temp);
+		}
+		student stu;
+		stu.change_ele(eles_data);
+		eles_data.clear();
+		database.push_back(stu);
+	}
+	return 0;
+}
 
+void manager::saveinfo()
+{
+	ofstream out;
+	out.open("data.txt", ios::out);
+	for (auto x : database)
+		out << x.show_all_ele() << endl;
 }
 
 void manager::add()
@@ -18,7 +60,21 @@ void manager::add()
 	cin >> temp;
 	if (temp == "2")
 	{
-
+		string path;
+		color(14);
+		cout << "输入文件绝对路径";
+		clc();
+		color();
+		getline(cin, path);
+		if (loadinfo(path) == -1)
+		{
+			color(12);
+			cout << "打开文件失败，请检查路径是否正确" << endl;
+			return;
+		}
+		color(14);
+		cout << "录入完毕" << endl;
+		return;
 	}
 	string num;
 	string name;
@@ -383,6 +439,7 @@ void manager::change()
 				tempa.clear();
 				tempa.insert(0, temp, temp.find('/') + 1, temp.length());
 				temp = tempa;
+				i++;
 			}
 			eles_data.push_back(temp);
 		}
@@ -613,14 +670,10 @@ void manager::show()
 		cout << x.show_all_ele() << endl;
 	cout << "全部信息打印完毕" << endl;
 	clc();
-	cout << "输入任意键退出" << endl;
+	cout << "按下任意键退出" << endl;
 	char x = _getch();
+	clear();
 }
-
-manager::~manager()
-{
-}
-
 
 void manager::search_all(string test)
 {
@@ -646,6 +699,7 @@ void manager::search_all(string test)
 		}
 	}
 }
+
 void manager::setcolor_output(bool nu)
 {
 	for (size_t i = 0; i < sel_database.size(); i++)

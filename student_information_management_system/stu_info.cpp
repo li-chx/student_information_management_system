@@ -1,4 +1,14 @@
 #include "stu_info.hpp"
+student::student()
+{
+	num = "";
+	name = "";
+	gender = false;
+	age = 0;
+	grade_class = { 0,0 };
+	address = "";
+	Phone_number = "";
+}
 
 student::student(string inum, string iname, bool igender, unsigned int iage, array<int, 2>igrade_class, string iaddress, string iPhone_number)
 {
@@ -14,9 +24,9 @@ student::student(string inum, string iname, bool igender, unsigned int iage, arr
 void student::change_ele(vector<string>eles)
 {
 	auto get_gender = [](string gender) {
-		if (gender[0] == 'ÄĞ')
+		if (gender == "ÄĞ")
 			return 0;
-		if (gender[0] == 'Å®')
+		if (gender == "Å®")
 			return 1;
 		return -1;
 	};

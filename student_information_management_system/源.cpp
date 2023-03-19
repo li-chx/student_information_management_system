@@ -4,6 +4,7 @@ encipher enci;
 manager manager_sys;
 int main()
 {
+	manager_sys.loadinfo();
 	color(2);
 	errno_t err = 0;
 	do
@@ -21,6 +22,7 @@ int main()
 		switch (err)
 		{
 		case 0:
+			manager_sys.saveinfo();
 			return 0;
 		case 1:
 			manager_sys.add();

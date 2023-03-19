@@ -47,3 +47,8 @@ void clc()
 		;
 	}
 }
+
+void clear()
+{
+	system("cls");
+}

@@ -4,7 +4,7 @@ using namespace std;
 class student
 {
 public:
-	student() = default;
+	student();
 	student(string inum, string iname, bool igender, unsigned int iage, array<int, 2>igrade_class, string iaddress, string iPhone_number);
 	void change_ele(vector<string> eles);
 	string show_all_ele();
