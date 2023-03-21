@@ -13,6 +13,7 @@ int manager::loadinfo(string path)
 	}
 	for (;;)
 	{
+		sstream.clear();
 		getline(in, temp);
 		if (temp.length() == 0)
 			break;

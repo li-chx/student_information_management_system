@@ -4,6 +4,11 @@ encipher enci;
 manager manager_sys;
 int main()
 {
+	vector<student>a;
+	list<vector<int>>b;
+
+
+
 	manager_sys.loadinfo();
 	color(2);
 	errno_t err = 0;

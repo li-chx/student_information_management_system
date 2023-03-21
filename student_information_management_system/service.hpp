@@ -18,5 +18,6 @@ private:
 	vector<list<student>::iterator>sel_database;
 	vector<int>sel_database_color;
 	list<student>database;
+
 };
 extern manager manager_sys;
